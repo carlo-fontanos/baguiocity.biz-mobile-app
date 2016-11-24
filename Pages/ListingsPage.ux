@@ -1,0 +1,84 @@
+<Panel ux:Class="ListingsPage">
+	<!-- Here we set the Router as a dependency, so you have to pass it in when you use a ListingsPage -->
+	<Router ux:Dependency="router" />
+	<!-- And our ListingsPage ux:Class obviously has its own business logic, which we keep in ListingsPage.js file -->
+	<JavaScript File="ListingsPage.js" />
+
+	<!-- Here we have a couple of smaller ux:Class'es that we reuse later in the code, just to keep everything nice and tidy -->
+	<!-- This here is what a single entry looks like in our list when the data is ready for display -->
+	<Panel ux:Class="Entry">
+		<StackPanel Margin="10" ItemSpacing="8" Alignment="VerticalCenter" ClipToBounds="true">
+			<StackPanel Orientation="Horizontal" ItemSpacing="5">
+				<Text FontSize="18" Color="#1C79DA" Alignment="Left" Value="{title}" />
+			</StackPanel>
+			<StackPanel Orientation="Horizontal" ItemSpacing="5">
+				<Text FontSize="14" Color="#333" Alignment="Left" Value="{date}" />
+			</StackPanel>
+			<Image Url="{image}" />
+			<Text FontSize="20" Color="#F36519" Alignment="Left" Value="P {price}" />
+		</StackPanel>
+		<Rectangle Fill="#fff" CornerRadius="5" />
+	</Panel>
+
+	<!-- This here is what a single entry looks like in our list when the data is NOT YET ready for display -->
+	<Panel ux:Class="EntryPlaceholder" Height="300">
+		<StackPanel Margin="10" ItemSpacing="3" Alignment="VerticalCenter" ClipToBounds="true">
+			<StackPanel Orientation="Horizontal" ItemSpacing="5">
+				<Rectangle Height="20" Color="#eee" Alignment="Left" Width="230" />
+			</StackPanel>
+			<Rectangle Fill="#eee" Height="200" />
+			<Rectangle Height="20" Color="#eee" Alignment="Left" Width="80" />
+		</StackPanel>
+		<Rectangle Fill="#fff" CornerRadius="3" />
+	</Panel>
+
+	<!-- This here is what we show as a status indication under the list of entries -->
+	<Panel ux:Class="StatusBar" Height="80">
+		<string ux:Property="Label" />
+		<Text FontSize="16" Color="#999" Alignment="Center" Value="{Property this.Label}" />
+	</Panel>
+
+	<!-- Now, the actual content part of ListingsPage starts here. We immediately put a ScrollView there with the new LayoutMode. -->
+	<ScrollView LayoutMode="PreserveVisual">
+
+		<!-- Here's the new Scrolled trigger that calls the getMoreEntries function in JS -->
+		<!--
+			It calls the function when a user scrolls near the end of the ScrollView by the margin of one full visible area height.
+			Basically, it triggers when the StackPanel content height on the bottom, outside of ScrollView, is less than the ScrollView height itself.
+		-->
+		<Scrolled To="End" Within="1" RelativeTo="ScrollViewSize" ux:Name="atEnd">
+			<Callback Handler="{getMoreEntries}" />
+		</Scrolled>
+
+		<StackPanel ItemSpacing="8" Margin="3">
+
+			<!-- Iterate through the entries Observable... -->
+			<Each Items="{entries}">
+				<!-- Defer the layout so that any transitions to and from this page would be fast -->
+				<Deferred>
+					<!-- The Entry ux:Class is not put on screen before the data for it is available -->
+					<Entry />
+				</Deferred>
+				<!-- And this here is shown while the data for a given item in entries Observable is not available yet -->
+				<WhileBusy>
+					<!-- What we want is the placeholder to look somewhat similar to the ux:Class element it will be replaced with -->
+					<EntryPlaceholder />
+				</WhileBusy>
+			</Each>
+
+			<!-- This little pal over here takes part in the layout, but in its own special way -->
+			<Panel LayoutRole="Placeholder">
+				<!-- We show a different message depending on if the data is currently being loaded or not. You know, network calls lag now and then. -->
+				<WhileTrue Value="{loading}">
+					<StatusBar Label="Loading..." />
+				</WhileTrue>
+				<WhileFalse Value="{loading}">
+					<StatusBar Label="Scroll down to load more" />
+				</WhileFalse>
+			</Panel>
+
+		</StackPanel>
+
+	</ScrollView>
+
+</Panel>

@@ -1,2 +1,18 @@
-<App>
+<App Background="#eee">
+	<!-- Since we will likely want to navigate to other pages, we include a Router -->
+	<Router ux:Name="router" />
+	<!-- Let's just have a simple DockPanel layout for our app -->
+	<DockPanel>
+		<!-- Now we take care of the status and bottom bars at the root level -->
+		<StatusBarBackground Dock="Top" />
+		<BottomBarBackground Dock="Bottom" IncludesKeyboard="false" />
+		<!-- And then we fill the available space with our page navigation -->
+		<Panel Dock="Fill" ClipToBounds="true">
+			<Navigator DefaultTemplate="listings">
+				<!-- See ListPage.ux for the following ListPage ux:Class definition -->
+				<ListingsPage ux:Template="listings" router="router" />
+				<!-- While right now we only have a single page, this is where you would add all the others -->
+			</Navigator>
+		</Panel>
+	</DockPanel>
 </App>
