@@ -1,0 +1,36 @@
+<Panel ux:Class="ListingsPageSingle">
+	<Router ux:Dependency="router" />
+	
+	<JavaScript File="ListingsPageSingle.js" />
+	
+	<StackPanel>
+		<ClientPanel Color="#000">
+			<PageControl ux:Name="pageControl">
+				<Each Items="{gallery}">
+					<Image Url="{}">
+						<!--
+						<InteractiveTransform ux:Name="imgtransform"/>
+						<PanGesture Target="imgtransform" />
+						<ZoomGesture Target="imgtransform"  />
+						-->
+					</Image>
+				</Each>
+			</PageControl>
+
+			<PageIndicator ux:Name="pageIndicator" Navigation="pageControl" Dock="Bottom" Alignment="BottomCenter">
+				<Circle ux:Template="Dot" ux:Name="dotFac" Color="#C6C6C9" Margin="5" Width="10" Height="20">
+					<ActivatingAnimation>
+						<Scale Factor="1.1"/>
+						<Change dotFac.Color="#56C7C8" />
+					</ActivatingAnimation>
+				</Circle>
+			</PageIndicator>	
+		</ClientPanel>
+	</StackPanel>
+	
+	<ScrollView>
+		<StackPanel>
+			<Text TextWrapping="Wrap" FontSize="15" Color="#1C79DA" Alignment="Left" Value="{title}" />
+		</StackPanel>
+	</ScrollView>
+</Panel>

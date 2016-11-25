@@ -18,6 +18,11 @@ function getMoreEntries() {
 	});
 };
 
+function go_to_single_item_page(arg){
+	var item = arg.data;
+	router.push("listingsPageSingle", item);
+}
+
 // This here is executed immediately when we first open the ListingsPage.
 // We tell our Data module to load the initial data, and when it's done...
 Data.init().then(
@@ -36,5 +41,7 @@ Data.init().then(
 module.exports = {
 	'entries': Data.data,
 	'loading': Data.loading,
-	'getMoreEntries': getMoreEntries
+	'getMoreEntries': getMoreEntries,
+	
+	'go_to_single_item_page': go_to_single_item_page
 };

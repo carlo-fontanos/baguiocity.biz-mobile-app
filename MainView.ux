@@ -8,9 +8,11 @@
 		<BottomBarBackground Dock="Bottom" IncludesKeyboard="false" />
 		<!-- And then we fill the available space with our page navigation -->
 		<Panel Dock="Fill" ClipToBounds="true">
-			<Navigator DefaultTemplate="listings">
+			<Navigator DefaultTemplate="listingsPage">
 				<!-- See ListPage.ux for the following ListPage ux:Class definition -->
-				<ListingsPage ux:Template="listings" router="router" />
+				<ListingsPage ux:Template="listingsPage" router="router" />
+				
+				<ListingsPageSingle ux:Template="listingsPageSingle" router="router" />
 				<!-- While right now we only have a single page, this is where you would add all the others -->
 			</Navigator>
 		</Panel>

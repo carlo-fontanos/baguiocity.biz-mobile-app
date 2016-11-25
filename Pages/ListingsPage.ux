@@ -8,26 +8,26 @@
 	<!-- This here is what a single entry looks like in our list when the data is ready for display -->
 	<Panel ux:Class="Entry">
 		<StackPanel Margin="10" ItemSpacing="8" Alignment="VerticalCenter" ClipToBounds="true">
-			<StackPanel Orientation="Horizontal" ItemSpacing="5">
-				<Text FontSize="18" Color="#1C79DA" Alignment="Left" Value="{title}" />
+			<StackPanel ItemSpacing="5">
+				<Text TextWrapping="Wrap" FontSize="15" Color="#1C79DA" Alignment="Left" Value="{title}" />
 			</StackPanel>
-			<StackPanel Orientation="Horizontal" ItemSpacing="5">
-				<Text FontSize="14" Color="#333" Alignment="Left" Value="{date}" />
+			<StackPanel ItemSpacing="5">
+				<Text FontSize="12" Color="#333" Alignment="Left" Value="{date}" />
 			</StackPanel>
-			<Image Url="{image}" />
-			<Text FontSize="20" Color="#F36519" Alignment="Left" Value="P {price}" />
+			<Image Url="{image}" Clicked="{go_to_single_item_page}" />
+			<Text FontSize="17" Color="#F36519" Alignment="Left" Value="P {price}" />
 		</StackPanel>
 		<Rectangle Fill="#fff" CornerRadius="5" />
 	</Panel>
 
 	<!-- This here is what a single entry looks like in our list when the data is NOT YET ready for display -->
-	<Panel ux:Class="EntryPlaceholder" Height="300">
+	<Panel ux:Class="EntryPlaceholder">
 		<StackPanel Margin="10" ItemSpacing="3" Alignment="VerticalCenter" ClipToBounds="true">
-			<StackPanel Orientation="Horizontal" ItemSpacing="5">
-				<Rectangle Height="20" Color="#eee" Alignment="Left" Width="230" />
+			<StackPanel ItemSpacing="5">
+				<Rectangle Height="20" Color="#eee" Alignment="Left" Width="80%" />
 			</StackPanel>
 			<Rectangle Fill="#eee" Height="200" />
-			<Rectangle Height="20" Color="#eee" Alignment="Left" Width="80" />
+			<Rectangle Height="20" Color="#eee" Alignment="Left" Width="30%" />
 		</StackPanel>
 		<Rectangle Fill="#fff" CornerRadius="3" />
 	</Panel>
