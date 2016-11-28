@@ -3,22 +3,24 @@
 	
 	<JavaScript File="ListingsPageSingle.js" />
 	
-	<StackPanel>
-		<ClientPanel Color="#000">
-			<PageControl ux:Name="pageControl">
-				<Each Items="{gallery}">
-					<Image Url="{}">
-						<!--
-						<InteractiveTransform ux:Name="imgtransform"/>
-						<PanGesture Target="imgtransform" />
-						<ZoomGesture Target="imgtransform"  />
-						-->
-					</Image>
+	<Panel ux:Class="ItemGallery">
+		<ClientPanel>
+			<PageControl ux:Name="pageControl" Color="#000">
+				<Each Items="{data.gallery}">
+					<Panel>
+						<Image Url="{}">
+							<!--
+							<InteractiveTransform ux:Name="imgtransform"/>
+							<PanGesture Target="imgtransform" />
+							<ZoomGesture Target="imgtransform"  />
+							-->
+						</Image>
+					</Panel>
 				</Each>
 			</PageControl>
 
 			<PageIndicator ux:Name="pageIndicator" Navigation="pageControl" Dock="Bottom" Alignment="BottomCenter">
-				<Circle ux:Template="Dot" ux:Name="dotFac" Color="#C6C6C9" Margin="5" Width="10" Height="20">
+				<Circle ux:Template="Dot" ux:Name="dotFac" Color="#C6C6C9" Margin="3, 10" Width="10" Height="20">
 					<ActivatingAnimation>
 						<Scale Factor="1.1"/>
 						<Change dotFac.Color="#56C7C8" />
@@ -26,11 +28,25 @@
 				</Circle>
 			</PageIndicator>	
 		</ClientPanel>
-	</StackPanel>
+	</Panel>
 	
-	<ScrollView>
+	<ScrollView LayoutMode="PreserveVisual">
 		<StackPanel>
-			<Text TextWrapping="Wrap" FontSize="15" Color="#1C79DA" Alignment="Left" Value="{title}" />
+			<Rectangle Fill="#eee" Height="250">
+				<ItemGallery />
+			 </Rectangle>
+			 <Rectangle Fill="#ccc" Height="5" />
+			 <StackPanel Margin="10, 15" ItemSpacing="10" Alignment="VerticalCenter" ClipToBounds="true">
+				<Text TextWrapping="Wrap" FontSize="20" Color="#1C79DA" Value="{data.post_title}" />
+				<Text TextWrapping="Wrap" FontSize="25" Color="#F36519" Value="P {data.price}" />
+				<WebView ux:Name="webview">
+					<HTML>
+						<![CDATA[
+							{data.post_content}
+						]]>
+					</HTML>
+				</WebView>
+			</StackPanel>
 		</StackPanel>
 	</ScrollView>
 </Panel>
